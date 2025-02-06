@@ -1,10 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserButton, SignInButton, useUser } from '@clerk/clerk-react';
 import { Brain, BarChart2, MessageCircle } from 'lucide-react';
 
 const Navbar = () => {
   const { isSignedIn } = useUser();
+  const navigate = useNavigate();
+
+  const handleChatClick = () => {
+    if (!isSignedIn) {
+      
+      return;
+    } else {
+      navigate('/chat');
+    }
+  };
 
   return (
     <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
@@ -27,18 +37,21 @@ const Navbar = () => {
                   <BarChart2 className="h-5 w-5" />
                   <span>Dashboard</span>
                 </Link>
-                <Link
-                  to="/chat"
+                <button
+                  onClick={handleChatClick}
                   className="flex items-center space-x-1 text-gray-700 hover:text-indigo-600"
                 >
                   <MessageCircle className="h-5 w-5" />
                   <span>Chat</span>
-                </Link>
+                </button>
                 <UserButton afterSignOutUrl="/" />
               </>
             ) : (
               <SignInButton mode="modal">
-                <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
+                <button
+                  onClick={handleChatClick}
+                  className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+                >
                   Sign In
                 </button>
               </SignInButton>

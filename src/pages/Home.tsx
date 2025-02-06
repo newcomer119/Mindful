@@ -42,7 +42,13 @@ const Home = () => {
         </p>
         
         <button
-          onClick={() => navigate(isSignedIn ? '/chat' : '/sign-up')}
+          onClick={() => {
+            if (!isSignedIn) {
+              alert('Sign in to use chatbot and dashboard');
+            } else {
+              navigate('/chat');
+            }
+          }}
           className="bg-indigo-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
         >
           Chat with AI Assistant
