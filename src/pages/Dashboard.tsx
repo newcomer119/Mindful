@@ -283,14 +283,14 @@ const Dashboard = () => {
               <input
                 type="number"
                 value={sleepHours}
-                onChange={(e) => setSleepHours(e.target.value)}
+                onChange={(e) => setSleepHours(Number(e.target.value))}
                 placeholder="Hours"
                 className="border rounded p-2"
               />
               <input
                 type="number"
                 value={sleepQuality}
-                onChange={(e) => setSleepQuality(e.target.value)}
+                onChange={(e) => setSleepQuality(Number(e.target.value))}
                 placeholder="Quality (1-10)"
                 className="border rounded p-2"
               />

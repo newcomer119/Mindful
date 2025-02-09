@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Bot, Loader2, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { Send, Bot, Loader2, RefreshCw, ThumbsUp, ThumbsDown, AlertTriangle } from 'lucide-react';
 import { useUser } from '@clerk/clerk-react';
 import HuggingFaceService from '../services/huggingface';
 
-// Initialize HuggingFace service with the API key from environment variables
+// Initialize HuggingFace service with the provided API key
 const huggingFaceService = new HuggingFaceService(import.meta.env.VITE_HUGGINGFACE_API_KEY);
 
 interface Message {
-  type: 'user' | 'bot';
+  type: 'user' | 'bot' | 'crisis';
   content: string;
   timestamp: string;
   sentiment?: {
@@ -22,7 +22,7 @@ const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       type: 'bot',
-      content: `Hi ${user?.firstName || 'there'}! I'm your mental wellness assistant. How are you feeling today?`,
+      content: `Hi ${user?.firstName || 'there'}! I'm your mental wellness assistant. I'm here to listen and support you. How are you feeling today?`,
       timestamp: new Date().toISOString(),
     }
   ]);
@@ -62,7 +62,7 @@ const Chat = () => {
       const response = await huggingFaceService.generateResponse(userMessage.content);
       
       const botResponse: Message = {
-        type: 'bot',
+        type: response.includes('IMMEDIATE HELP AVAILABLE') ? 'crisis' : 'bot',
         content: response,
         timestamp: new Date().toISOString(),
       };
@@ -71,7 +71,7 @@ const Chat = () => {
     } catch (error) {
       const errorMessage: Message = {
         type: 'bot',
-        content: 'I apologize, but I encountered an error. Please try again.',
+        content: 'I sense that you might be going through something difficult. Would you like to tell me more about what\'s troubling you?',
         timestamp: new Date().toISOString(),
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -97,7 +97,7 @@ const Chat = () => {
       
       const newMessages = [...messages];
       newMessages[index] = {
-        type: 'bot',
+        type: response.includes('IMMEDIATE HELP AVAILABLE') ? 'crisis' : 'bot',
         content: response,
         timestamp: new Date().toISOString(),
       };
@@ -119,6 +119,9 @@ const Chat = () => {
             <Bot className="h-6 w-6 text-indigo-600" />
             <h2 className="text-lg font-semibold text-gray-800">Mental Wellness Assistant</h2>
           </div>
+          <p className="text-sm text-gray-600 mt-1">
+            I'm here to support you. If you're in crisis, please know that help is available 24/7.
+          </p>
         </div>
 
         {/* Messages Container */}
@@ -134,22 +137,29 @@ const Chat = () => {
                 className={`max-w-[80%] rounded-2xl p-4 ${
                   message.type === 'user'
                     ? 'bg-indigo-600 text-white'
+                    : message.type === 'crisis'
+                    ? 'bg-red-50 border-2 border-red-200 text-gray-800'
                     : 'bg-gray-100 text-gray-800'
                 }`}
               >
                 <div className="flex items-center space-x-2 mb-2">
                   {message.type === 'bot' && <Bot className="h-5 w-5 text-indigo-600" />}
+                  {message.type === 'crisis' && <AlertTriangle className="h-5 w-5 text-red-500" />}
                   <span className="text-sm opacity-70">
                     {new Date(message.timestamp).toLocaleTimeString()}
                   </span>
                 </div>
-                <p className="whitespace-pre-wrap">{message.content}</p>
-                {message.sentiment && (
-                  <div className="mt-1 text-sm opacity-70">
-                    Sentiment: {message.sentiment.label} ({Math.round(message.sentiment.score * 100)}%)
+                <div className="whitespace-pre-wrap">
+                  {message.content.split('\n').map((line, i) => (
+                    <p key={i} className="mb-2">{line}</p>
+                  ))}
+                </div>
+                {message.sentiment && message.sentiment.label === 'NEGATIVE' && message.sentiment.score > 0.8 && (
+                  <div className="mt-2 text-sm bg-red-100 text-red-800 px-3 py-1 rounded-full inline-block">
+                    High distress detected
                   </div>
                 )}
-                {message.type === 'bot' && (
+                {(message.type === 'bot' || message.type === 'crisis') && (
                   <div className="flex items-center space-x-2 mt-2 text-gray-500">
                     <button className="hover:text-indigo-600 p-1 rounded">
                       <ThumbsUp className="h-4 w-4" />
@@ -171,7 +181,7 @@ const Chat = () => {
           {isTyping && (
             <div className="flex items-center space-x-2 text-gray-500">
               <Loader2 className="h-5 w-5 animate-spin" />
-              <span>AI is typing...</span>
+              <span>Assistant is typing...</span>
             </div>
           )}
           <div ref={messagesEndRef} />
