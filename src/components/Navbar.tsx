@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { UserButton, SignInButton, useUser } from '@clerk/clerk-react';
-import { Brain, BarChart2, MessageCircle, BookOpen } from 'lucide-react';
+import { Brain, BarChart2, MessageCircle, BookOpen, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Navbar = () => {
@@ -88,18 +88,37 @@ const Navbar = () => {
                   </Link>
                 </motion.div>
 
+                <motion.div
+                  variants={navItemVariants}
+                  whileHover="hover"
+                >
+                  <Link
+                    to="/about"
+                    className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors ${
+                      isActive('/about')
+                        ? 'bg-indigo-50 text-indigo-600'
+                        : 'text-gray-700 hover:text-indigo-600'
+                    }`}
+                  >
+                    <Users className="h-5 w-5" />
+                    <span>About Us</span>
+                  </Link>
+                </motion.div>
+
                 <UserButton afterSignOutUrl="/" />
               </>
             ) : (
-              <SignInButton mode="modal">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-                >
-                  Sign In
-                </motion.button>
-              </SignInButton>
+              <>
+                <SignInButton mode="modal">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                  >
+                    Sign In
+                  </motion.button>
+                </SignInButton>
+              </>
             )}
           </div>
         </div>
