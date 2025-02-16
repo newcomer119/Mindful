@@ -9,7 +9,7 @@ import Chat from './pages/Chat';
 import Blog from './pages/Blog';
 import About from './pages/About';
 
-const clerkPubKey = 'pk_test_ZGVjZW50LWFwZS03Mi5jbGVyay5hY2NvdW50cy5kZXYk';
+const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 function App() {
   return (
