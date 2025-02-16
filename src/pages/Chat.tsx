@@ -2,10 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Bot, Loader2, RefreshCw, ThumbsUp, ThumbsDown, AlertTriangle } from 'lucide-react';
 import { useUser } from '@clerk/clerk-react';
-import HuggingFaceService from '../services/huggingface';
-
-// Initialize HuggingFace service with the provided API key
-const huggingFaceService = new HuggingFaceService(import.meta.env.VITE_HUGGINGFACE_API_KEY);
+import GeminiService from '../services/gemini';
 
 interface Message {
   type: 'user' | 'bot' | 'crisis';
@@ -22,7 +19,7 @@ const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       type: 'bot',
-      content: `Hi ${user?.firstName || 'there'}! I'm your mental wellness assistant. I'm here to listen and support you. How are you feeling today?`,
+      content: `Namaste ${user?.firstName || 'there'}! 🙏 I'm your mental wellness assistant. I'm here to listen and support you. How are you feeling today?`,
       timestamp: new Date().toISOString(),
     }
   ]);
@@ -55,11 +52,11 @@ const Chat = () => {
 
     try {
       // Analyze sentiment of user message
-      const sentiment = await huggingFaceService.analyzeSentiment(userMessage.content);
+      const sentiment = await GeminiService.analyzeSentiment(userMessage.content);
       userMessage.sentiment = sentiment;
 
       // Generate AI response
-      const response = await huggingFaceService.generateResponse(userMessage.content);
+      const response = await GeminiService.generateResponse(userMessage.content);
       
       const botResponse: Message = {
         type: response.includes('IMMEDIATE HELP AVAILABLE') ? 'crisis' : 'bot',
@@ -93,7 +90,7 @@ const Chat = () => {
     setIsTyping(true);
     try {
       const userMessage = messages[index - 1];
-      const response = await huggingFaceService.generateResponse(userMessage.content);
+      const response = await GeminiService.generateResponse(userMessage.content);
       
       const newMessages = [...messages];
       newMessages[index] = {

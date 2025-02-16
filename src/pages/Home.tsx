@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
+import Contact from '../components/Contact';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -69,22 +70,22 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
             Your Mental Wellness Journey <br />
             <span className="text-indigo-600">Powered by AI</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Experience personalized mental health support with our AI assistant, helping you understand and improve your emotional well-being.
           </p>
           
-          <div className="flex justify-center space-x-4">
+          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -147,7 +148,7 @@ const Home = () => {
       </div>
 
       {/* Features Section */}
-      <div className="bg-gray-50 py-20">
+      <div className="bg-gray-50 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -155,15 +156,15 @@ const Home = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Comprehensive Mental Wellness Features
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-lg md:text-xl text-gray-600">
               Everything you need to support your mental well-being
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -189,7 +190,7 @@ const Home = () => {
       </div>
 
       {/* Why Choose Us */}
-      <div className="py-20">
+      <div className="py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -197,10 +198,10 @@ const Home = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Why Choose MindfulAI?
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-lg md:text-xl text-gray-600">
               We're committed to providing the best mental wellness support
             </p>
           </motion.div>
@@ -256,7 +257,7 @@ const Home = () => {
       </div>
 
       {/* Testimonials */}
-      <div className="bg-gray-50 py-20">
+      <div className="bg-gray-50 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -264,15 +265,15 @@ const Home = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               What Our Users Say
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-lg md:text-xl text-gray-600">
               Join thousands of students improving their mental well-being
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
@@ -305,113 +306,13 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Pricing Plans */}
-      <div className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Choose Your Plan
-            </h2>
-            <p className="text-xl text-gray-600">
-              Flexible options for every need
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white p-8 rounded-xl shadow-lg border-2 border-indigo-600"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold">Premium</h3>
-                  <p className="text-gray-600">Coming Soon</p>
-                </div>
-                <Lock className="h-6 w-6 text-indigo-600" />
-              </div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center space-x-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Unlimited AI chat sessions</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Priority support</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Advanced analytics</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Personalized wellness plan</span>
-                </li>
-              </ul>
-              <button
-                disabled
-                className="w-full bg-gray-300 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed"
-              >
-                Coming Soon
-              </button>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="bg-white p-8 rounded-xl shadow-lg"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold">Local Version</h3>
-                  <p className="text-gray-600">Free</p>
-                </div>
-                <Globe className="h-6 w-6 text-gray-600" />
-              </div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center space-x-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Basic AI chat support</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Anxiety tracking</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Music recommendations</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Community support</span>
-                </li>
-              </ul>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate(isSignedIn ? '/chat' : '/sign-up')}
-                className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
-              >
-                Get Started
-              </motion.button>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-      
+      {/* Contact Section */}
+      <Contact />
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <Brain className="h-8 w-8 text-indigo-400" />
@@ -484,4 +385,3 @@ const Home = () => {
 };
 
 export default Home;
-
