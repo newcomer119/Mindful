@@ -54,7 +54,7 @@ const Contact = () => {
             initial={{ x: -50, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-8 mt-8"
           >
             <div className="bg-indigo-50 p-6 rounded-xl">
               <h3 className="text-xl font-semibold text-gray-900 mb-6">
@@ -87,20 +87,6 @@ const Contact = () => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="bg-pink-50 p-6 rounded-xl">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                Emergency Support
-              </h3>
-              <p className="text-gray-600 mb-4">
-                If you're experiencing a mental health emergency, please reach out to:
-              </p>
-              <ul className="space-y-2 text-gray-600">
-                <li>• National Crisis Helpline: 988</li>
-                <li>• Emergency Services: 911</li>
-                <li>• Crisis Text Line: Text HOME to 741741</li>
-              </ul>
             </div>
           </motion.div>
 
